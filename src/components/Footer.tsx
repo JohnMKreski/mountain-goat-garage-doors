@@ -3,8 +3,9 @@
 import { site } from '@/constants/site';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+// import { faFacebook, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useState } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export default function Footer() {
     const [year, setYear] = useState<number>();
@@ -36,7 +37,7 @@ export default function Footer() {
                     <div className="d-flex gap-3">
                         {site.social
                             .filter((item) => item.type !== 'custom') // Only FA icons
-                            .map(({ href, label, icon, color }) => (
+                            .map(({ href, label, icon, type, color }) => (
                                 <a
                                     key={href}
                                     href={href}
@@ -53,7 +54,17 @@ export default function Footer() {
                                     onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.8')}
                                     aria-label={label}
                                 >
-                                    <FontAwesomeIcon icon={icon} />
+                                    {type === 'custom' ? (
+                                    <Image
+                                        src={icon as string}
+                                        alt={label}
+                                        width={24}
+                                        height={24}
+                                        style={{ objectFit: 'contain' }}
+                                    />
+                                ) : (
+                                    <FontAwesomeIcon icon={icon as IconProp} />
+                                )}
                                 </a>
                             ))}
                     </div>

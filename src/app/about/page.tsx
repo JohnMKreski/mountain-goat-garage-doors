@@ -23,15 +23,16 @@ export default function AboutPage() {
             setCurrentIndex((prev) => (prev + 1) % phrases.length);
             }, 3000); // 3s per phrase
             return () => clearInterval(interval);
-        }, []);
+        }, [phrases.length]);
 
-        const [imageVisible, setImageVisible] = useState(false);
+        // Optional: Fade-in effect for the image
+        // const [imageVisible, setImageVisible] = useState(false);
 
-        useEffect(() => {
-          // Delay to simulate fade-in after component mount
-            const timer = setTimeout(() => setImageVisible(true), 200);
-            return () => clearTimeout(timer);
-        }, []);
+        // useEffect(() => {
+        //   // Delay to simulate fade-in after component mount
+        //     const timer = setTimeout(() => setImageVisible(true), 200);
+        //     return () => clearTimeout(timer);
+        // }, []);
 
     return (
         <>
