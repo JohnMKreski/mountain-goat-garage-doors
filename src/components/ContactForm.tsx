@@ -45,8 +45,8 @@ export default function ContactForm() {
         const result = await res.json();
 
         if (!res.ok) {
-            console.error('Response Status:', res.status);
-            console.error('Error Details:', result);
+            // console.error('Response Status:', res.status);
+            // console.error('Error Details:', result);
             throw new Error(result.error || 'Failed to send');
         }
 
