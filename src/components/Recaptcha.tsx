@@ -1,8 +1,16 @@
 'use client';
-import dynamic from 'next/dynamic';
 
-const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'), { ssr: false });
+import { forwardRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
 
-export default ReCAPTCHA;
+// Forward the ref properly
+const ReCAPTCHAWrapper = forwardRef<ReCAPTCHAClass, React.ComponentProps<typeof ReCAPTCHA>>(
+  (props, ref) => <ReCAPTCHA {...props} ref={ref} />
+);
+
+ReCAPTCHAWrapper.displayName = 'ReCAPTCHAWrapper';
+
+export default ReCAPTCHAWrapper;
 
 

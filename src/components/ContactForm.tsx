@@ -209,10 +209,10 @@ export default function ContactForm() {
             >
                 <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                    ref={recaptchaRef}
                     size="invisible"
                     theme="dark"
                     badge="inline"
+                    ref={recaptchaRef}
                 />
             </div>
 
