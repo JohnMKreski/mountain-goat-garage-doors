@@ -32,14 +32,15 @@ export default function ContactForm() {
         setMessage('');
 
         try {
-            const token = await recaptchaRef.current?.executeAsync();
-            recaptchaRef.current?.reset();
+            // const token = await recaptchaRef.current?.executeAsync();
+            // console.log('Token:', token);
+            // recaptchaRef.current?.reset();
             
 
         const res = await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...form, token }),
+            body: JSON.stringify({ ...form }), //took out token for now
         });
 
         const result = await res.json();

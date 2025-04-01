@@ -3,17 +3,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sendContactEmail } from '@/lib/mailer';
 import { checkRateLimit } from '@/lib/rateLimiter';
 
-console.time('Contact Form Submission');
 
 export async function POST(req: NextRequest) {
-    console.timeEnd('Contact Form Submission');
     try {
-        const { name, email, message, phone, address, token, website  } = await req.json();
+        const { name, email, message, phone, address, website  } = await req.json();
         const ip = req.headers.get('x-forwarded-for') || 'unknown';
         const phonePattern = /^\d{10}$/;   // 10-digit US format
         // const addressPattern = /^[a-zA-Z0-9\s,.'-]{3,}$/; // Basic address validation
 
         // console.log('Received Form Data:', { name, email, phone, address, message, token });
+
+
 
         
         // Honeypot check — if filled, it's spam
@@ -25,26 +25,28 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Too many submissions. Please wait and try again later.' }, { status: 429 });
         }
 
-        if (!token) {
-            return NextResponse.json({ error: 'No reCAPTCHA token' }, { status: 400 });
-        }
+        // reCAPTCHA validation (uncomment if reCAPTCHA is implemented)
+        // if (!token) {
+        //     return NextResponse.json({ error: 'No reCAPTCHA token' }, { status: 400 });
+        // }
 
-        const isValid = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
-        }).then(res => res.json());
+        // const isValid = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //     body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+        // }).then(res => res.json());
 
-        //TESTING ONLY
-        console.log('reCAPTCHA response from Google:', isValid);
+        // //TESTING ONLY
+        // console.log('reCAPTCHA response from Google:', isValid);
+        // console.log('Token:', token);
+        // console.log('Secret exists:', !!process.env.RECAPTCHA_SECRET_KEY);
+        // console.log('reCAPTCHA API Response:', isValid);
 
-        if (!isValid.success) {
-            // Log the error details for debugging
-            console.log('Incoming reCAPTCHA token:', token);
-            console.log('Loaded secret key exists:', !!process.env.RECAPTCHA_SECRET_KEY);
-            return NextResponse.json({ error: 'reCAPTCHA failed' }, { status: 400 });
+        // if (!isValid.success) {
+        //     return NextResponse.json({ error: 'reCAPTCHA failed' }, { status: 400 });
 
-        }
+        // }
+        // temporary bypass for testing
 
         if (!name || !email || !message) {
         return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
