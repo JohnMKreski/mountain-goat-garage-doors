@@ -1,103 +1,200 @@
-import Image from "next/image";
+'use client';
+
+import Hero from '@/components/Hero';
+import Container from '@/components/Container';
+import Image from 'next/image';
+import Button from '@/components/Button';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <Hero />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Tray 2 – Visual Impact */}
+      <section className=" py-5"
+      style={{
+        // backgroundColor: 'var(--color-panel)',
+        // borderTop: '1px solid var(--color-border)',
+        color: 'var(--color-text)',
+    }}>
+      <Container>
+        <div className="section-tray"
+        style={{
+          background: 'linear-gradient(135deg, #3a3a3a, #1f1f1f)',
+          boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          transition: 'transform 0.3s ease-in-out',
+          padding: '2rem',
+          borderRadius: '8px',
+        }}>
+          <div className="row g-4">
+            {/* Large Image Block */}
+            <div className="col-12 col-md-8 d-flex flex-column justify-content-between rounded p-4"
+            style={{
+                  transition: 'transform 0.3s ease-in-out', 
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-5px)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            >
+              <div className="position-relative h-100 rounded overflow-hidden" style={{ backgroundColor: '#222', height: '100%' }}>
+                <Image
+                  src="/stock/door9.jpg"
+                  alt="Luxury garage"
+                  className="w-100 h-100 object-fit-cover rounded"
+                  style={{ 
+                    objectFit: 'cover', 
+                  }}
+                  width={800}
+                  height={600}
+                />
+                <div className="position-absolute bottom-0 start-0 p-4 bg-dark bg-opacity-75 w-100">
+                  <h2 className="text-light fs-4 text-uppercase fw-light m-0">Open Up the Possibilities</h2>
+                </div>
+              </div>
+            </div>
+
+            {/* Side Text Feature Block */}
+            <div
+                className="col-12 col-md-4 d-flex flex-column justify-content-between rounded p-4"
+                style={{
+                  background: 'linear-gradient(135deg, #3a3a3a, #1f1f1f)', // Dark gradient for depth
+                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)', // Subtle shadow
+                  border: '1px solid rgba(255, 255, 255, 0.1)', // Light border for definition
+                  transition: 'transform 0.3s ease-in-out', // Hover transition effect
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-5px)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+              >          
+              <div
+                className="rounded overflow-hidden mb-3"
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '200px', 
+                  backgroundColor: '#222', 
+                }}
+              >
+                <Image
+                  src="/stock/door11.jpg" // Update with your correct image path
+                  alt="Bold by Design"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+                {/* Content */}
+              <div>
+                <h3 className="fs-5 text-uppercase text-light">Bold by Design</h3>
+                <p className="small text-light">
+                  Every door we install is a design decision. We blend form, silence, and strength into each entry point.
+                </p>
+              </div>
+
+              <Button href="/contact" label="Book a Consult" variant="outline" className="mt-3 align-self-start" />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </Container>
+    </section>
+
+
+    <section
+      className="py-5 border-top border-secondary"
+      style={{
+        backgroundColor: 'transparent',
+        color: 'var(--color-text)',
+      }}
+    >
+      <Container>
+      <div className='section-tray'
+      style={{
+        background: 'linear-gradient(135deg, #3a3a3a, #1f1f1f)', // Dark gradient for depth
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)', // Subtle shadow
+        border: '1px solid rgba(255, 255, 255, 0.1)', // Light border for definition
+        transition: 'transform 0.3s ease-in-out', // Hover transition effect
+      }}
+      >
+        <h3 className="text-uppercase text-center mb-5" style={{color: 'white'}}>Why Choose Us</h3>
+        <div className="text-light row g-3 justify-content-center">
+        {[
+          {
+            label: 'We value your time and money as much as you do.',
+            color: '#222',
+          },
+          {
+            label:
+              'We are the locally owned and operated garage door business in Buena Vista.',
+            color: '#333',
+          },
+        ].map((item, i) => (
+          <div key={i} className="col-12 col-md-6">
+            <div
+              className="rounded p-4 h-100 text-center"
+              style={{
+                backgroundColor: item.color,
+                transition: 'all 0.3s ease-in-out',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+              }}
+              // Individual Hover Effect on Each Item
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-5px)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            >
+              <p className="fw-semibold small text-uppercase m-0">{item.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+        </div>
+      </Container>
+    </section>
+
+
+
+
+      {/* Tray 4 – Testimonial */}
+      {/* <section className=" py-5 border-top border-secondary"
+      style={{
+        backgroundColor: 'var(--color-panel)',
+        borderTop: '1px solid var(--color-border)',
+        color: 'var(--color-text)',
+      }}> */}
+      {/* <Container>
+        <div className="row g-3"> */}
+          {/* Quote */}
+          {/* <div className="col-12 col-md-6">
+            <div className="rounded p-4 h-100">
+              <blockquote className="fst-italic text-muted">
+                “Garage Underground completely transformed the look of my home. They delivered exactly what I wanted — clean lines, quiet openers, and serious style.”
+              </blockquote>
+              <p className="fw-semibold mt-3">— Alex R., Boulder</p>
+            </div>
+          </div> */}
+
+          {/* Image */}
+          {/* <div className="col-6 col-md-3 text-center">
+            <div className="bg-secondary rounded-circle overflow-hidden mx-auto" style={{ width: '120px', height: '120px' }}>
+              <img
+                src="/client-placeholder.jpg"
+                alt="Client photo"
+                className="img-fluid h-100 w-100 object-fit-cover"
+              />
+            </div>
+          </div> */}
+
+          {/* CTA */}
+          {/* <div className="col-6 col-md-3 d-flex align-items-center">
+            <div className="bg-secondary rounded p-3 w-100 text-center">
+              <h4 className="text-light fs-6 text-uppercase mb-2">Like what you see?</h4>
+              <a href="/contact" className="text-light btn btn-outline-light btn-sm">
+                Get a Quote
+              </a>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section> */}
+
+    </>
   );
 }
+

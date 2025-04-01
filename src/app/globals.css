@@ -1,26 +1,164 @@
-@import "tailwindcss";
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #edf3f7;
+  --color-bg-secondary: #edf3f7;
+  --color-panel: #3a3a3a;
+  --color-text: #1a1a1a;
+  --color-accent: #454949;
+  --color-accent-light: #a5c8dc;
+  --color-border: #d0d0cd;
+  --font-body: 'Inter', sans-serif;
+  --color-gradient-dark: linear-gradient(135deg, #3a3a3a, #1f1f1f);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Optional: 30% opacity for contrast */
+  z-index: -1;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  background-image: url('/stock/door0.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
 }
+
+/* body {
+  background: linear-gradient(to bottom, rgba(47, 89, 78, 0.7), rgba(0, 0, 0, 0.5)),
+    url('/stock/door1.jpg') no-repeat center center fixed;
+  background-size: cover;
+} */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.section-tray {
+  background-color: rgba(255, 255, 255, 0.9); /* Light transparency */
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px); /* Optional glassmorphism effect */
+  width: 95%; /* Near full width for smaller screens */
+  max-width: 1600px; /* Wider limit for large screens */
+  margin: 0 auto; /* Centered horizontally */
+}
+
+/* Increase width for larger screens */
+@media (min-width: 1400px) {
+  .section-tray {
+    width: 95%; /* Slight margin for very large screens */
+  }
+}
+
+/* Full width for medium and smaller screens */
+@media (max-width: 768px) {
+  .section-tray {
+    width: 100%; /* Full width on smaller devices */
+    padding: 1.5rem; /* Less padding for mobile */
+    border-radius: 8px; /* Smaller radius for mobile */
+  }
+}
+
+.hero-bg {
+  background-image: url('/stock/door1.jpg'); /* Correct path */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6); /* Darkens the image slightly */
+  z-index: 0; /* Set it behind content */
+}
+
+/* Optional Overlay for Darker Effect */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  z-index: 1;
+}
+
+/* Center and contain the text and button */
+.section-tray {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Optional: Button Styling */
+.btn-lg {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: transparent;
+}
+
+.btn-lg:hover {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.btn,
+.btn:hover,
+.btn:focus {
+  text-decoration: none !important;
+}
+
+.btn-outline-light {
+  text-decoration: none;
+}
+
+.btn-outline-light:hover,
+.btn-outline-light:focus {
+  text-decoration: none;
+}
+
+
+.btn-outline-light {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-light:hover {
+  background-color: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent-light);
+}
+
+
+
+.gallery-tile {
+  transition: transform 0.3s ease;
+}
+
+.gallery-tile:hover {
+  transform: scale(1.04);
+}
+
