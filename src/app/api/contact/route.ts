@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
 
         // console.log('Received Form Data:', { name, email, phone, address, message, token });
 
+        
         // Honeypot check — if filled, it's spam
         if (website && website.trim() !== '') {
             return NextResponse.json({ error: 'Bot detected' }, { status: 400 });
@@ -34,8 +35,15 @@ export async function POST(req: NextRequest) {
             body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
         }).then(res => res.json());
 
+        //TESTING ONLY
+        console.log('reCAPTCHA response from Google:', isValid);
+
         if (!isValid.success) {
+            // Log the error details for debugging
+            console.log('Incoming reCAPTCHA token:', token);
+            console.log('Loaded secret key exists:', !!process.env.RECAPTCHA_SECRET_KEY);
             return NextResponse.json({ error: 'reCAPTCHA failed' }, { status: 400 });
+
         }
 
         if (!name || !email || !message) {

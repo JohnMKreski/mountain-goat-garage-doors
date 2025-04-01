@@ -19,6 +19,7 @@ export default function ContactForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
 
         if (!recaptchaRef.current) {
         setStatus('error');
