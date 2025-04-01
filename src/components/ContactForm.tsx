@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import ReCAPTCHA from '@/components/Recaptcha';
-import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
+import { useState } from 'react';
+// import ReCAPTCHA from '@/components/Recaptcha';
+// import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
 
 export default function ContactForm() {
     const [form, setForm] = useState({ name: '', email: '', message: '', phone: '', address: '', website: '' });
@@ -10,7 +10,7 @@ export default function ContactForm() {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
+    // const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -21,11 +21,11 @@ export default function ContactForm() {
         e.preventDefault();
         
 
-        if (!recaptchaRef.current) {
-        setStatus('error');
-        setMessage('reCAPTCHA not ready. Try again in a moment.');
-        return;
-        }
+        // if (!recaptchaRef.current) {
+        // setStatus('error');
+        // setMessage('reCAPTCHA not ready. Try again in a moment.');
+        // return;
+        // }
 
         setLoading(true);
         setStatus('idle');
@@ -209,13 +209,13 @@ export default function ContactForm() {
                     zIndex: -1, // Push behind everything
                 }}
             >
-                <ReCAPTCHA
+                {/* <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                     size="invisible"
                     theme="dark"
                     badge="inline"
                     ref={recaptchaRef}
-                />
+                /> */}
             </div>
 
         </form>
