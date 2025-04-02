@@ -22,9 +22,26 @@ export async function POST(req: NextRequest) {
         await sendContactEmail(body);
     
         return NextResponse.json({ success: true });
-        } catch (error) {
-        console.error('Error in POST /api/contact:', error);
-        return NextResponse.json({ error: 'Server error', details: error }, { status: 500 });
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error('Error in POST /api/contact:', error);
+                return NextResponse.json(
+                    {
+                        error: 'Server error',
+                        details: error.message,
+                    },
+                    { status: 500 }
+                );
+            } else {
+                console.error('Unknown error in POST /api/contact:', error);
+                return NextResponse.json(
+                    {
+                        error: 'Server error',
+                        details: 'An unknown error occurred',
+                    },
+                    { status: 500 }
+                );
+            }
         }
     }
 
