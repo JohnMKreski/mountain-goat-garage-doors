@@ -3,6 +3,7 @@ import {
     faInstagram,
     faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
+import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 //   import { faPeakservices } from '@fortawesome/react-fontawesome'
 
 
@@ -17,27 +18,33 @@ export const site = {
     ],
     social: [
         {
+            href: 'tel:+1234567890',
+            label: 'Phone',
+            icon: faPhoneAlt,
+            // color: '#28a745', // optional green or your theme color
+        },
+        {
             href: 'https://peakservices.io',
             label: 'Peak Services',
             icon: '/peakservices.svg',
             type: 'custom',
-            },
-            {
+        },
+        {
             href: 'https://facebook.com',
             label: 'Facebook',
             icon: faFacebook,
             color: '#1877F2',
-            },
-            {
+        },
+        {
             href: 'https://instagram.com',
             label: 'Instagram',
             icon: faInstagram,
-            },
-            {
+        },
+        {
             href: 'https://linkedin.com',
             label: 'LinkedIn',
             icon: faLinkedinIn,
-            },
+        },
         ],
     pages: {
     about: {

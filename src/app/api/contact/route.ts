@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         const { sendContactEmail } = await import('@/lib/mailer');
         await sendContactEmail(body);
     
-        return NextResponse.json({ success: true });
+        return NextResponse.json({ success: true }, { status: 200 });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.error('Error in POST /api/contact:', error);

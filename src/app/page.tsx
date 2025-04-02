@@ -4,10 +4,17 @@ import Hero from '@/components/Hero';
 import Container from '@/components/Container';
 import Image from 'next/image';
 import Button from '@/components/Button';
+import SEO from '@/components/SEO';
 
 export default function Home() {
   return (
     <>
+      <SEO
+          title="Home | Mountain Goat Garage Doors"
+          description="Reliable garage door services in Buena Vista and the Arkansas River Valley."
+          url="https://www.mountaingoatgaragedoors.com/"
+        />
+
       <Hero />
 
       {/* Tray 2 – Visual Impact */}

@@ -1,4 +1,5 @@
 import Container from '@/components/Container';
+import SEO from '@/components/SEO';
 import ServiceCard from '@/components/ServiceCard';
 import { site } from '@/constants/site';
 import Image from 'next/image';
@@ -8,6 +9,11 @@ export default function ServicesPage() {
 
     return (
         <>
+        <SEO
+            title="Services | Mountain Goat Garage Doors"
+            description="New Garage Installations. 24/7 Repair. Custom Door Manufacturing. Residential & Commercial Openers. Proudly serving Buena Vista."
+            url="https://www.mountaingoatgaragedoors.com/services"
+        />
         {/* Section 1: What We Offer */}
         <section
             className="py-5 border-top border-secondary"

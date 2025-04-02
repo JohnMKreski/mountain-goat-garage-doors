@@ -186,6 +186,20 @@ export default function Navbar() {
                   </Link>
                 </li>
               ))}
+
+              {/* Call Us - Mobile Only */}
+              <li className="nav-item mb-2">
+                <a
+                  href="tel:+1234567890"
+                  className="nav-link text-white "
+                  style={{ 
+                    fontWeight: 500
+                  }}
+                  onClick={() => setIsOpen(false)}
+                >
+                Call Us!
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

@@ -35,6 +35,9 @@ export default function Footer() {
                     
                     {/* Social Icons */}
                     <div className="d-flex gap-3">
+                    {/* <PhoneIcon className="inline w-4 h-4 mr-1" />
+                    <a href="tel:+1234567890">+1 (234) 567-890</a> */}
+
                         {site.social
                             .filter((item) => item.type !== 'custom') // Only FA icons
                             .map(({ href, label, icon, type, color }) => (

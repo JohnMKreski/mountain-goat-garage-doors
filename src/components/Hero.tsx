@@ -60,10 +60,17 @@ export default function Hero() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 1 }}
+                        className="d-flex justify-content-center gap-3 mt-4"
                     >
                         <Button
                             href="/contact"
                             label="Get a Quote"
+                            variant="outline"
+                            className="btn-lg"
+                        />
+                        <Button
+                            href="tel:+1234567890"
+                            label="Give Us a Call"
                             variant="outline"
                             className="btn-lg"
                         />

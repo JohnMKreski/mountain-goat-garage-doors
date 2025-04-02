@@ -4,6 +4,7 @@ import '@/lib/fontawesome';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Inter } from 'next/font/google';
+import SEO from '@/components/SEO';
 // import { Space_Grotesk } from 'next/font/google';
 
 export const metadata = {
@@ -28,6 +29,8 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    <>
+    <SEO />
     <html lang="en" className={inter.className}>
       <body className="d-flex flex-column min-vh-100">
         <Navbar />
@@ -35,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
       </body>
     </html>
+    </>
   );
 }
 

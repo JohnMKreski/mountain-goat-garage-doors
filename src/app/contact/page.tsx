@@ -3,9 +3,16 @@
 import Container from '@/components/Container';
 import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 
 export default function ContactPage() {
     return (
+        <>
+        <SEO
+            title="Contact | Mountain Goat Garage Doors"
+            description="Mounatin Goat Garage Doors. We’re here to help! Expect a response the same day or within 24 hours."
+            url="https://www.mountaingoatgaragedoors.com/contact"
+        />
         <section
             className="py-5 border-top border-secondary"
             style={{
@@ -100,7 +107,11 @@ export default function ContactPage() {
                                     <div className="mb-4">
                                         <h4 className="fs-6 text-uppercase mb-3 text-white">Headquarters</h4>
                                         <p className="small text-light mb-2">Buena Vista, CO</p>
-                                        <p className="small text-light mb-4">info@mountaingoatgaragedoors.com</p>
+                                        <p className="small text-light mb-2">info@mountaingoatgaragedoors.com</p>
+                                        <p className="small text-light mb-4">
+                                            Prefer to talk? Call us at <a href="tel:+1234567890" className="text-white underline">+1 (234) 567-8910</a>
+                                        </p>
+
                                     </div>
 
                                     {/* Let’s Connect */}
@@ -117,6 +128,7 @@ export default function ContactPage() {
                 </div>
             </Container>
         </section>
+        </>
     );
 }
 

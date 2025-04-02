@@ -1,6 +1,7 @@
 "use client";
 
 import Container from '@/components/Container';
+import SEO from '@/components/SEO';
 import { site } from '@/constants/site';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -36,6 +37,12 @@ export default function AboutPage() {
 
     return (
         <>
+            <SEO
+                title="About | Mountain Goat Garage Doors"
+                description="We are proud to serve the Buena Vista and the Arkansas River Valley community with dedication and unmatched expertise."
+                url="https://www.mountaingoatgaragedoors.com/about"
+            />
+
             <section
             className="py-5 border-top border-secondary"
             style={{
