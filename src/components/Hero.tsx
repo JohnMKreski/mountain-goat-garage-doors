@@ -69,7 +69,7 @@ export default function Hero() {
                             className="btn-lg"
                         />
                         <Button
-                            href="tel:+1234567890"
+                            href="tel:+17193983077"
                             label="Give Us a Call"
                             variant="outline"
                             className="btn-lg"

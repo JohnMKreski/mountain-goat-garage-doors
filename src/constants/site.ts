@@ -18,7 +18,7 @@ export const site = {
     ],
     social: [
         {
-            href: 'tel:+1234567890',
+            href: 'tel:+17193983077',
             label: 'Phone',
             icon: faPhoneAlt,
             // color: '#28a745', // optional green or your theme color

@@ -190,7 +190,7 @@ export default function Navbar() {
               {/* Call Us - Mobile Only */}
               <li className="nav-item mb-2">
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+17193983077"
                   className="nav-link text-white "
                   style={{ 
                     fontWeight: 500

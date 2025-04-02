@@ -109,7 +109,7 @@ export default function ContactPage() {
                                         <p className="small text-light mb-2">Buena Vista, CO</p>
                                         <p className="small text-light mb-2">info@mountaingoatgaragedoors.com</p>
                                         <p className="small text-light mb-4">
-                                            Prefer to talk? Call us at <a href="tel:+1234567890" className="text-white underline">+1 (234) 567-8910</a>
+                                            Prefer to talk? Call us at <a href="tel:+17193983077" className="text-white underline">+1 (719) 398 3077</a>
                                         </p>
 
                                     </div>
