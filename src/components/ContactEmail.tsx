@@ -1,18 +1,22 @@
-interface Props {
-    name: string;
-    email: string;
-    phone: string;
-    address?: string;
-    message: string;
-  }
-  
-  export const ContactEmail: React.FC<Props> = ({
-    name,
-    email,
-    phone,
-    address,
-    message,
-  }) => (
+// components/ContactEmail.tsx
+import React from 'react';
+
+interface ContactEmailProps {
+  name: string;
+  email: string;
+  phone: string;
+  address?: string;
+  message: string;
+}
+
+export const ContactEmail = ({
+  name,
+  email,
+  phone,
+  address,
+  message,
+}: ContactEmailProps): React.ReactElement => {
+  return (
     <div>
       <h2>New Contact Message from {name}</h2>
       <p><strong>Email:</strong> {email}</p>
@@ -22,4 +26,5 @@ interface Props {
       <p>{message}</p>
     </div>
   );
-  
+};
+

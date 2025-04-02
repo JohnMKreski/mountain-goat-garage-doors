@@ -8,7 +8,6 @@ export async function GET() {
     return NextResponse.json({ status: 'Contact API is up' });
 }
 
-
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();

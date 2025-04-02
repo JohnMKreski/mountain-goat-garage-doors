@@ -11,18 +11,23 @@ type ContactFormData = {
   address?: string;
 };
 
-export async function sendContactEmail({ name, email, message, phone, address }: ContactFormData) {
-  const emailContent = await ContactEmail({ name, email, phone, address, message }); // Resolve the Promise
-  const response = await resend.emails.send({
-    from: process.env.EMAIL_FROM!,
-    to: process.env.EMAIL_TO!,
-    subject: `📬 New Inquiry from ${name}`,
-    react: emailContent,
-  });
+export async function sendContactEmail({ 
+  name, 
+  email, 
+  message, 
+  phone, 
+  address }: ContactFormData) {
+    const emailContent = ContactEmail({ name, email, phone, address, message }); // Resolve the Promise
+    
+    const response = await resend.emails.send({
+      from: process.env.EMAIL_FROM!,
+      to: process.env.EMAIL_TO!,
+      subject: `📬 New Inquiry from ${name}`,
+      react: emailContent,
+    });
 
   if (response.error) {
     console.error('Resend error:', response.error);
     throw new Error(response.error.message);
   }
-
 }
