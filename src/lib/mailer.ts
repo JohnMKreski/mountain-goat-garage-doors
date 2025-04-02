@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { ContactEmail } from '@/components/ContactEmail';
 
+console.log('🌱 ENV CHECK: RESEND_API_KEY loaded?', !!process.env.RESEND_API_KEY);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 type ContactFormData = {

@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 // import { sendContactEmail } from '@/lib/mailer';
 // import { checkRateLimit } from '@/lib/rateLimiter';
 
+console.log('API key defined?', !!process.env.RESEND_API_KEY);
+
+
 //API test endpoint
 export async function GET() {
     return NextResponse.json({ status: 'Contact API is up' });
