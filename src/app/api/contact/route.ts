@@ -76,3 +76,9 @@ export async function POST(req: NextRequest) {
     }
 }
 
+//API test endpoint
+export async function GET() {
+    return NextResponse.json({ status: 'Contact API is up' });
+}
+
+

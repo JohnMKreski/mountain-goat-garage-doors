@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google';
 
 export const metadata = {
   title: 'Mountain Goat Garage Doors',
-  description: 'Creative garage door solutions with style.',
+  description: 'Garge Door company in Buena Vista',
   icons: {
     icon: '/favicon/favicon.ico',
   },
