@@ -12,6 +12,7 @@ export default function ContactForm() {
 
     const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
     const formDisabled = process.env.NEXT_PUBLIC_CONTACT_FORM_DISABLED === 'true';
+    const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -24,6 +25,12 @@ export default function ContactForm() {
         if (formDisabled) {
             setStatus('error');
             setMessage('Contact form is temporarily disabled. Please call or email us.');
+            return;
+        }
+
+        if (!recaptchaSiteKey) {
+            setStatus('error');
+            setMessage('Contact form is temporarily unavailable (reCAPTCHA not configured). Please call or email us.');
             return;
         }
         
@@ -188,7 +195,7 @@ export default function ContactForm() {
                     ? 'bg-neutral-300 text-white' // Optional loading style
                     : 'btn-outline-light border border-white text-white hover:bg-white hover:text-black'
                 }`}
-                disabled={loading || formDisabled}
+                disabled={loading || formDisabled || !recaptchaSiteKey}
                 >
                 {loading ? (
                     <>
@@ -215,13 +222,15 @@ export default function ContactForm() {
                     zIndex: -1, // Push behind everything
                 }}
             >
-                <ReCAPTCHA
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                    size="invisible"
-                    theme="dark"
-                    badge="inline"
-                    ref={recaptchaRef}
-                />
+                {recaptchaSiteKey ? (
+                    <ReCAPTCHA
+                        sitekey={recaptchaSiteKey}
+                        size="invisible"
+                        theme="dark"
+                        badge="inline"
+                        ref={recaptchaRef}
+                    />
+                ) : null}
             </div>
 
         </form>
