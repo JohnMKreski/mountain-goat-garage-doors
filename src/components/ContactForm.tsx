@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReCAPTCHA from '@/components/Recaptcha';
 import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
 
@@ -9,12 +9,32 @@ export default function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [apiDisabled, setApiDisabled] = useState(false);
 
     const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
     const formDisabled = process.env.NEXT_PUBLIC_CONTACT_FORM_DISABLED === 'true';
     const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-    const bannerMessage = formDisabled
+    useEffect(() => {
+        let isMounted = true;
+
+        (async () => {
+            try {
+                const res = await fetch('/api/contact', { method: 'GET' });
+                if (!res.ok) return;
+                const json = (await res.json()) as { disabled?: boolean };
+                if (isMounted) setApiDisabled(json.disabled === true);
+            } catch {
+                // Ignore — UI will fall back to local flags.
+            }
+        })();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    const bannerMessage = formDisabled || apiDisabled
         ? 'The contact form is temporarily disabled due to unusually high traffic.'
         : !recaptchaSiteKey
             ? 'The contact form is temporarily unavailable (security configuration missing).'
@@ -28,7 +48,7 @@ export default function ContactForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (formDisabled) {
+        if (formDisabled || apiDisabled) {
             setStatus('error');
             setMessage('Contact form is temporarily disabled. Please call or email us.');
             return;
@@ -210,7 +230,7 @@ export default function ContactForm() {
                     ? 'bg-neutral-300 text-white' // Optional loading style
                     : 'btn-outline-light border border-white text-white hover:bg-white hover:text-black'
                 }`}
-                disabled={loading || formDisabled || !recaptchaSiteKey}
+                disabled={loading || formDisabled || apiDisabled || !recaptchaSiteKey}
                 >
                 {loading ? (
                     <>

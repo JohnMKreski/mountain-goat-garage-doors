@@ -15,7 +15,10 @@ type ContactRequestBody = {
 
 //API test endpoint
 export async function GET() {
-    return NextResponse.json({ status: 'Contact API is up' });
+    return NextResponse.json({
+        status: 'Contact API is up',
+        disabled: process.env.CONTACT_FORM_DISABLED === 'true',
+    });
 }
 
 export async function POST(req: NextRequest) {
