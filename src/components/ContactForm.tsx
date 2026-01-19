@@ -14,6 +14,12 @@ export default function ContactForm() {
     const formDisabled = process.env.NEXT_PUBLIC_CONTACT_FORM_DISABLED === 'true';
     const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
+    const bannerMessage = formDisabled
+        ? 'The contact form is temporarily disabled due to unusually high traffic.'
+        : !recaptchaSiteKey
+            ? 'The contact form is temporarily unavailable (security configuration missing).'
+            : null;
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -79,6 +85,15 @@ export default function ContactForm() {
 
     return (
         <>
+        {bannerMessage ? (
+            <div className="alert alert-warning" role="alert">
+                <div className="fw-semibold">{bannerMessage}</div>
+                <div className="small">
+                    Please call <a className="link-dark" href="tel:+17193983077">+1 (719) 398 3077</a> or email{' '}
+                    <a className="link-dark" href="mailto:info@mountaingoatgaragedoors.com">info@mountaingoatgaragedoors.com</a>.
+                </div>
+            </div>
+        ) : null}
         <form onSubmit={handleSubmit} className="row g-4"
         style={{ 
             border: '1px solid var(--color-border)',
