@@ -17,7 +17,7 @@ type ContactRequestBody = {
 export async function GET() {
     return NextResponse.json({
         status: 'Contact API is up',
-        disabled: process.env.CONTACT_FORM_DISABLED === 'true',
+        disabled: process.env.CONTACT_FORM_DISABLED === 'true', 
     });
 }
 

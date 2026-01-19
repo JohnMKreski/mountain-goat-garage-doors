@@ -56,7 +56,7 @@ export default function ContactForm() {
 
         if (!recaptchaSiteKey) {
             setStatus('error');
-            setMessage('Contact form is temporarily unavailable (reCAPTCHA not configured). Please call or email us.');
+            setMessage('Contact form is temporarily unavailable (reCAPTCHA not configured).Please call or email us.');
             return;
         }
         
