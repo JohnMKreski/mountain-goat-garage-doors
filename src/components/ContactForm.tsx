@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-// import ReCAPTCHA from '@/components/Recaptcha';
-// import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
+import { useRef, useState } from 'react';
+import ReCAPTCHA from '@/components/Recaptcha';
+import type { ReCAPTCHA as ReCAPTCHAClass } from 'react-google-recaptcha';
 
 export default function ContactForm() {
     const [form, setForm] = useState({ name: '', email: '', message: '', phone: '', address: '', website: '' });
@@ -10,7 +10,8 @@ export default function ContactForm() {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
+    const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
+    const formDisabled = process.env.NEXT_PUBLIC_CONTACT_FORM_DISABLED === 'true';
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -19,28 +20,33 @@ export default function ContactForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (formDisabled) {
+            setStatus('error');
+            setMessage('Contact form is temporarily disabled. Please call or email us.');
+            return;
+        }
         
 
-        // if (!recaptchaRef.current) {
-        // setStatus('error');
-        // setMessage('reCAPTCHA not ready. Try again in a moment.');
-        // return;
-        // }
+        if (!recaptchaRef.current) {
+            setStatus('error');
+            setMessage('reCAPTCHA not ready. Try again in a moment.');
+            return;
+        }
 
         setLoading(true);
         setStatus('idle');
         setMessage('');
 
         try {
-            // const token = await recaptchaRef.current?.executeAsync();
-            // console.log('Token:', token);
-            // recaptchaRef.current?.reset();
+            const token = await recaptchaRef.current.executeAsync();
+            recaptchaRef.current.reset();
             
 
         const res = await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...form }), //took out token for now
+            body: JSON.stringify({ ...form, token }),
         });
 
         const result = await res.json();
@@ -182,7 +188,7 @@ export default function ContactForm() {
                     ? 'bg-neutral-300 text-white' // Optional loading style
                     : 'btn-outline-light border border-white text-white hover:bg-white hover:text-black'
                 }`}
-                disabled={loading}
+                disabled={loading || formDisabled}
                 >
                 {loading ? (
                     <>
@@ -209,13 +215,13 @@ export default function ContactForm() {
                     zIndex: -1, // Push behind everything
                 }}
             >
-                {/* <ReCAPTCHA
+                <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                     size="invisible"
                     theme="dark"
                     badge="inline"
                     ref={recaptchaRef}
-                /> */}
+                />
             </div>
 
         </form>
