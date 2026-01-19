@@ -9,23 +9,46 @@ export default function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const [apiDisabled, setApiDisabled] = useState(false);
+    const [apiState, setApiState] = useState<'unknown' | 'enabled' | 'disabled' | 'unreachable'>('unknown');
 
     const recaptchaRef = useRef<ReCAPTCHAClass | null>(null);
     const formDisabled = process.env.NEXT_PUBLIC_CONTACT_FORM_DISABLED === 'true';
     const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+    const apiDisabled = apiState === 'disabled';
+    const apiUnreachable = apiState === 'unreachable';
+    const uiTemporarilyDisabled = formDisabled || apiDisabled || apiUnreachable || !recaptchaSiteKey;
+    const inputsDisabled = loading || uiTemporarilyDisabled;
+
+    const formStyle: React.CSSProperties = {
+        border: '1px solid var(--color-border)',
+        borderRadius: '0.5rem',
+        padding: '1.5rem',
+        color: 'white',
+        opacity: inputsDisabled ? 0.65 : 1,
+        filter: inputsDisabled ? 'grayscale(0.25)' : 'none',
+        pointerEvents: inputsDisabled ? 'none' : 'auto',
+        cursor: inputsDisabled ? 'not-allowed' : 'auto',
+    };
 
     useEffect(() => {
         let isMounted = true;
 
         (async () => {
             try {
-                const res = await fetch('/api/contact', { method: 'GET' });
-                if (!res.ok) return;
+                const res = await fetch(`/api/contact?ts=${Date.now()}`, {
+                    method: 'GET',
+                    cache: 'no-store',
+                });
+                if (!res.ok) {
+                    if (isMounted) setApiState('unreachable');
+                    return;
+                }
                 const json = (await res.json()) as { disabled?: boolean };
-                if (isMounted) setApiDisabled(json.disabled === true);
+                if (!isMounted) return;
+                setApiState(json.disabled === true ? 'disabled' : 'enabled');
             } catch {
-                // Ignore — UI will fall back to local flags.
+                if (isMounted) setApiState('unreachable');
             }
         })();
 
@@ -34,11 +57,14 @@ export default function ContactForm() {
         };
     }, []);
 
-    const bannerMessage = formDisabled || apiDisabled
-        ? 'The contact form is temporarily disabled due to unusually high traffic.'
-        : !recaptchaSiteKey
-            ? 'The contact form is temporarily unavailable (security configuration missing).'
-            : null;
+    const bannerMessage =
+        formDisabled || apiDisabled
+            ? 'The contact form is temporarily disabled due to unusually high traffic.'
+            : apiUnreachable
+                ? 'The contact form is temporarily unavailable right now.'
+                : !recaptchaSiteKey
+                    ? 'The contact form is temporarily unavailable (security configuration missing).'
+                    : null;
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,6 +77,12 @@ export default function ContactForm() {
         if (formDisabled || apiDisabled) {
             setStatus('error');
             setMessage('Contact form is temporarily disabled. Please call or email us.');
+            return;
+        }
+
+        if (apiUnreachable) {
+            setStatus('error');
+            setMessage('Contact form is temporarily unavailable. Please call or email us.');
             return;
         }
 
@@ -72,15 +104,31 @@ export default function ContactForm() {
         setMessage('');
 
         try {
-            const token = await recaptchaRef.current.executeAsync();
+            const withTimeout = async <T,>(promise: Promise<T>, ms: number): Promise<T> => {
+                return await Promise.race([
+                    promise,
+                    new Promise<T>((_, reject) =>
+                        setTimeout(() => reject(new Error('Timed out')), ms)
+                    ),
+                ]);
+            };
+
+            const token = await withTimeout(recaptchaRef.current.executeAsync(), 8000);
             recaptchaRef.current.reset();
+
+            if (!token) {
+                throw new Error('Unable to verify reCAPTCHA');
+            }
             
+        const controller = new AbortController();
+        const abortTimer = setTimeout(() => controller.abort(), 15000);
 
         const res = await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...form, token }),
-        });
+            signal: controller.signal,
+        }).finally(() => clearTimeout(abortTimer));
 
         const result = await res.json();
 
@@ -115,11 +163,7 @@ export default function ContactForm() {
             </div>
         ) : null}
         <form onSubmit={handleSubmit} className="row g-4"
-        style={{ 
-            border: '1px solid var(--color-border)',
-            borderRadius: '0.5rem', padding: '1.5rem',
-            color: 'white'
-        }}>
+        style={formStyle}>
 
             {/* Name */}
             <div className="col-md-6">
@@ -130,6 +174,7 @@ export default function ContactForm() {
                 id="name"
                 name="name"
                 required
+                disabled={inputsDisabled}
                 value={form.name}
                 onChange={handleChange}
             />
@@ -145,6 +190,7 @@ export default function ContactForm() {
                 name="email"
                 title='Please Enter a Valid Email Address'
                 required
+                disabled={inputsDisabled}
                 value={form.email}
                 onChange={handleChange}
             />
@@ -162,6 +208,7 @@ export default function ContactForm() {
                     placeholder="e.g., 5551234567"
                     // title="(555) 123-4567"
                     required
+                    disabled={inputsDisabled}
                     value={form.phone}
                     onChange={handleChange}
                 />
@@ -177,6 +224,7 @@ export default function ContactForm() {
                     id="address"
                     name="address"
                     rows={2}
+                    disabled={inputsDisabled}
                     value={form.address}
                     onChange={handleChange}
                 />
@@ -187,6 +235,7 @@ export default function ContactForm() {
             type="text"
             name="website"
             autoComplete="off"
+            disabled={inputsDisabled}
             style={{ display: 'none', position: 'absolute', left: '-9999px' }}
             tabIndex={-1}
             />
@@ -200,6 +249,7 @@ export default function ContactForm() {
                 name="message"
                 rows={4}
                 required
+                disabled={inputsDisabled}
                 value={form.message}
                 onChange={handleChange}
             />
@@ -230,7 +280,7 @@ export default function ContactForm() {
                     ? 'bg-neutral-300 text-white' // Optional loading style
                     : 'btn-outline-light border border-white text-white hover:bg-white hover:text-black'
                 }`}
-                disabled={loading || formDisabled || apiDisabled || !recaptchaSiteKey}
+                disabled={inputsDisabled}
                 >
                 {loading ? (
                     <>
